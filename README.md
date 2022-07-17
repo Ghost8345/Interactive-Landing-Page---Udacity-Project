@@ -48,7 +48,7 @@ No additional installation is required for this project
 ## Features
 
 * Active State change for sections and nav links as user scrolls the viewport
-* Smooth scrolling using `scrollIntoView` when a nav link is clicked 
+* Smooth scrolling using `scrollIntoView()` when a nav link is clicked 
 
 ## Running the App
 
