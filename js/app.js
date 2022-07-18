@@ -5,17 +5,21 @@
 
 // Start Helper Functions
 
-//Function that checks if an element is in viewport or not
-function isInViewport(elem) {
-	const position = elem.getBoundingClientRect()
+//Function that gets the index of the element that is in viewport
 
-	return (
-		position.top >= 0 &&
-		position.left >= 0 &&
-		position.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-		position.right <= (window.innerWidth || document.documentElement.clientWidth)
-	);
-};
+function getCurrentSectionIndex() {
+    let min = window.innerHeight;
+    let currentSectionIndex = -1;
+
+    sections.forEach((section, index) => {
+        const offset = section.getBoundingClientRect();
+        if(Math.abs(offset.top) < min){
+            min = Math.abs(offset.top);
+            currentSectionIndex = index;
+        }
+    });
+    return currentSectionIndex;
+}
 
  // Begin Main Functions
 
@@ -41,16 +45,17 @@ function buildNav() {
 // Add class 'active' to section when in viewport
 
 function setActiveSection(){
-    for (section of sections){
-        if(isInViewport(section)){
-            if (!section.classList.contains("your-active-class")){
-                section.classList.add("your-active-class");
-            }
-            else {
-                section.classList.remove("your-active-class");
-            }
-        }
-    }
+    const currentSectionIndex = getCurrentSectionIndex();
+
+    if(currentSectionIndex != -1){
+
+        sections.forEach((section, index) => {
+            if (index == currentSectionIndex)
+                section.classList.add('your-active-class');
+            else
+                section.classList.remove('your-active-class');
+        });
+    };
 }
 
 
