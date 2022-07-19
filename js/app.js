@@ -5,26 +5,20 @@
 
 // Start Helper Functions
 
-//Function that gets the index of the element that is in viewport
+//Function that gets the index of the element that is in viewport by how much percent of it should be visible.
 
-function getCurrentSectionIndex() {
-    let min = window.innerHeight;
-    let currentSectionIndex = -1;
-
-    sections.forEach((section, index) => {
-        const offset = section.getBoundingClientRect();
-        if(Math.abs(offset.top) < min){
-            min = Math.abs(offset.top);
-            currentSectionIndex = index;
-        }
-    });
-    return currentSectionIndex;
+function isInViewPort(section, percentVisible){
+        const boundary = section.getBoundingClientRect();
+        return !(
+            Math.floor(100 - (((boundary.top >= 0 ? 0 : boundary.top) / +-boundary.height) * 100)) < percentVisible ||
+            Math.floor(100 - ((boundary.bottom - window.innerHeight) / boundary.height) * 100) < percentVisible
+          )
 }
 
  // Begin Main Functions
 
 // Building the navigation bar dynamically and add scrolling behavior in <a> tag.
-function buildNav() {
+function buildNavigation() {
     const fragment = document.createDocumentFragment();
     for (const section of sections) {
         const listTag = document.createElement("li");
@@ -45,22 +39,24 @@ function buildNav() {
 // Add class 'active' to section when in viewport
 
 function setActiveSection(){
-    const currentSectionIndex = getCurrentSectionIndex();
 
-    if(currentSectionIndex != -1){
-
-        sections.forEach((section, index) => {
-            if (index == currentSectionIndex)
-                section.classList.add('your-active-class');
-            else
-                section.classList.remove('your-active-class');
-        });
-    };
+    for(section of sections) {
+        if(isInViewPort(section, 75)){
+            if(!section.classList.contains("your-active-class")){
+                section.classList.add("your-active-class");
+            }
+        }
+        else {
+            if(section.classList.contains("your-active-class")){
+                section.classList.remove("your-active-class");
+            }
+        }
+    }
 }
 
 
 // Build menu and scroll to appropriate section
-buildNav();
+buildNavigation();
 
 // Checks and set Active Section while scrolling
 document.addEventListener("scroll", setActiveSection);
