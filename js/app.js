@@ -1,4 +1,3 @@
-
 //Global Variables
  const sections = document.querySelectorAll("section");
  const navbar = document.querySelector("#navbar__list");
@@ -23,17 +22,21 @@ function buildNavigation() {
     for (const section of sections) {
         const listTag = document.createElement("li");
         const linkTag = document.createElement("a");
-        linkTag.setAttribute("class", "menu__link");
-        linkTag.innerText = section.getAttribute("data-nav");
-        linkTag.addEventListener("click", (event) => {
-            event.preventDefault();
-            section.scrollIntoView({behavior: "smooth"});
-            });
         listTag.appendChild(linkTag);
-        
+        linkTag.outerHTML = `<a class = "menu__link" data = "${section.getAttribute("id")}"> ${section.getAttribute("data-nav")} </a>`;
         fragment.appendChild(listTag);
     }
     navbar.appendChild(fragment);
+    
+}
+
+function addScrollFunctionality(){
+    document.querySelectorAll(".menu__link").forEach(elem => {
+        elem.addEventListener("click", (event) => {
+            event.preventDefault();
+            document.querySelector(`#${elem.getAttribute("data")}`).scrollIntoView({behavior: "smooth"});
+        });
+    });
 }
 
 // Add class 'active' to section when in viewport
@@ -55,8 +58,10 @@ function setActiveSection(){
 }
 
 
-// Build menu and scroll to appropriate section
+// Build menu 
 buildNavigation();
+// Scroll to appropriate section
+addScrollFunctionality();
 
 // Checks and set Active Section while scrolling
 document.addEventListener("scroll", setActiveSection);
