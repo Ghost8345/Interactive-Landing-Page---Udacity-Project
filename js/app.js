@@ -44,14 +44,19 @@ function addScrollFunctionality(){
 function setActiveSection(){
 
     for(section of sections) {
+        const activeNavItem = document.querySelector(`[data = "${section.getAttribute("id")}"]`);
         if(isInViewPort(section, 75)){
             if(!section.classList.contains("your-active-class")){
                 section.classList.add("your-active-class");
+                activeNavItem.classList.add("active-nav");
+                // activeNavItem.style.cssText = "background: #333; color: #fff; transition: ease 0.3s all;";
             }
         }
         else {
             if(section.classList.contains("your-active-class")){
                 section.classList.remove("your-active-class");
+                activeNavItem.classList.remove("active-nav");
+                // activeNavItem.style.cssText = "background: #fff; color: #000; transition: ease 0.3s all;";
             }
         }
     }
