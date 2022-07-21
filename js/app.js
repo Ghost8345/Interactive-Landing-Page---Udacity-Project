@@ -45,7 +45,7 @@ function setActiveSection(){
 
     for(section of sections) {
         const activeNavItem = document.querySelector(`[data = "${section.getAttribute("id")}"]`);
-        if(isInViewPort(section, 75)){
+        if(isInViewPort(section, 65)){
             if(!section.classList.contains("your-active-class")){
                 section.classList.add("your-active-class");
                 activeNavItem.classList.add("active-nav");
