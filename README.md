@@ -40,10 +40,10 @@ No additional installation is required for this project
       `document.createElement` </br>
       `.setAttribute` </br>
       `.appendChild` </br>
+      
+* Next we have to add scroll functionality to sections. We can use `event.preventDefault()` and `scrollIntoView()`
 
-* Next step would be to check which section is currently being viewed and distinguish it using css. We can check if element is in viewport or not using `getBoundingClientRect()`.  
-
-* Last part is to add the functionality to scroll to sections. We can use `scrollIntoView()`
+* Lastly we check which section is currently being viewed and distinguish it and it's navigation bar item using css. We can check if element is in viewport or not using `getBoundingClientRect()`.  
 
 ## Features
 
